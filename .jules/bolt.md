@@ -1,0 +1,3 @@
+## 2024-05-22 - App Polling Optimization
+**Learning:** Polling in React using `setInterval` inside `useEffect` can lead to stale closures if the callback is not carefully managed with `useRef` or dependencies. Additionally, naively updating state with fetched data on every tick causes infinite re-renders at the root level (`App.js`), affecting the entire component tree.
+**Action:** Always check `setInterval` or `setTimeout` loops for stale closure risks. Use `useRef` to hold mutable current state if needed inside closures. Implement deep comparison (e.g., `JSON.stringify`) before updating state to prevent unnecessary re-renders when data is stable.
