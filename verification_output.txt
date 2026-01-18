@@ -1,0 +1,9 @@
+Navigating to Kitchen view...
+Waiting for network requests...
+Request URL: https://pulingly-unpromising-gracie.ngrok-free.dev/api/pedidos?activos=true
+✅ Optimization confirmed: activos=true param found.
+Request URL: https://pulingly-unpromising-gracie.ngrok-free.dev/api/pedidos?activos=true
+✅ Optimization confirmed: activos=true param found.
+Request URL: https://pulingly-unpromising-gracie.ngrok-free.dev/api/pedidos?activos=true
+✅ Optimization confirmed: activos=true param found.
+Screenshot saved.
