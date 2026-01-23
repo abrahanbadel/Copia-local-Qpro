@@ -1,0 +1,21 @@
+
+> mi-restaurante@0.1.0 test
+> react-scripts test --watchAll=false src/verify_api.test.js
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+  console.log
+    🌐 API URL configurada: https://pulingly-unpromising-gracie.ngrok-free.dev/api
+
+      at Object.<anonymous> (src/services/api.js:3:9)
+
+PASS src/verify_api.test.js
+  API Service
+    ✓ getPedidos(true) should append ?activos=true to URL (4 ms)
+    ✓ getPedidos(false) should NOT append ?activos=true (1 ms)
+    ✓ getPedidos() (default) should NOT append ?activos=true (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        1.39 s
+Ran all test suites matching /src\/verify_api.test.js/i.
