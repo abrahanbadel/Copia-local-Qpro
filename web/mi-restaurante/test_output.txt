@@ -1,0 +1,117 @@
+
+> mi-restaurante@0.1.0 test
+> react-scripts test --watchAll=false src/verify_api.test.js
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+  console.log
+    🌐 API URL configurada: https://pulingly-unpromising-gracie.ngrok-free.dev/api
+
+      at Object.<anonymous> (src/services/api.js:3:9)
+
+  console.error
+    Error en getPedidos: TypeError: Cannot read properties of undefined (reading 'ok')
+        at Object.getPedidos (/app/web/mi-restaurante/src/services/api.js:166:19)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at Object.<anonymous> (/app/web/mi-restaurante/src/verify_api.test.js:16:5)
+
+      167 |     return await response.json();
+      168 |   } catch (error) {
+    > 169 |     console.error('Error en getPedidos:', error);
+          |             ^
+      170 |     throw error;
+      171 |   }
+      172 | };
+
+      at Object.getPedidos (src/services/api.js:169:13)
+      at Object.<anonymous> (src/verify_api.test.js:16:5)
+
+  console.error
+    Error en getPedidos: TypeError: Cannot read properties of undefined (reading 'ok')
+        at Object.getPedidos (/app/web/mi-restaurante/src/services/api.js:166:19)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at Object.<anonymous> (/app/web/mi-restaurante/src/verify_api.test.js:23:5)
+
+      167 |     return await response.json();
+      168 |   } catch (error) {
+    > 169 |     console.error('Error en getPedidos:', error);
+          |             ^
+      170 |     throw error;
+      171 |   }
+      172 | };
+
+      at Object.getPedidos (src/services/api.js:169:13)
+      at Object.<anonymous> (src/verify_api.test.js:23:5)
+
+  console.error
+    Error en getPedidos: TypeError: Cannot read properties of undefined (reading 'ok')
+        at Object.getPedidos (/app/web/mi-restaurante/src/services/api.js:166:19)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at Object.<anonymous> (/app/web/mi-restaurante/src/verify_api.test.js:31:5)
+
+      167 |     return await response.json();
+      168 |   } catch (error) {
+    > 169 |     console.error('Error en getPedidos:', error);
+          |             ^
+      170 |     throw error;
+      171 |   }
+      172 | };
+
+      at Object.getPedidos (src/services/api.js:169:13)
+      at Object.<anonymous> (src/verify_api.test.js:31:5)
+
+FAIL src/verify_api.test.js
+  API Service
+    ✕ getPedidos(true) should append ?activos=true to URL (20 ms)
+    ✕ getPedidos(false) should NOT append ?activos=true (2 ms)
+    ✕ getPedidos() (default) should NOT append ?activos=true (1 ms)
+
+  ● API Service › getPedidos(true) should append ?activos=true to URL
+
+    TypeError: Cannot read properties of undefined (reading 'ok')
+
+      164 |     const url = activos ? `${API_URL}/pedidos?activos=true` : `${API_URL}/pedidos`;
+      165 |     const response = await fetchWithHeaders(url);
+    > 166 |     if (!response.ok) throw new Error('Error al obtener pedidos');
+          |                   ^
+      167 |     return await response.json();
+      168 |   } catch (error) {
+      169 |     console.error('Error en getPedidos:', error);
+
+      at Object.getPedidos (src/services/api.js:166:19)
+      at Object.<anonymous> (src/verify_api.test.js:16:5)
+
+  ● API Service › getPedidos(false) should NOT append ?activos=true
+
+    TypeError: Cannot read properties of undefined (reading 'ok')
+
+      164 |     const url = activos ? `${API_URL}/pedidos?activos=true` : `${API_URL}/pedidos`;
+      165 |     const response = await fetchWithHeaders(url);
+    > 166 |     if (!response.ok) throw new Error('Error al obtener pedidos');
+          |                   ^
+      167 |     return await response.json();
+      168 |   } catch (error) {
+      169 |     console.error('Error en getPedidos:', error);
+
+      at Object.getPedidos (src/services/api.js:166:19)
+      at Object.<anonymous> (src/verify_api.test.js:23:5)
+
+  ● API Service › getPedidos() (default) should NOT append ?activos=true
+
+    TypeError: Cannot read properties of undefined (reading 'ok')
+
+      164 |     const url = activos ? `${API_URL}/pedidos?activos=true` : `${API_URL}/pedidos`;
+      165 |     const response = await fetchWithHeaders(url);
+    > 166 |     if (!response.ok) throw new Error('Error al obtener pedidos');
+          |                   ^
+      167 |     return await response.json();
+      168 |   } catch (error) {
+      169 |     console.error('Error en getPedidos:', error);
+
+      at Object.getPedidos (src/services/api.js:166:19)
+      at Object.<anonymous> (src/verify_api.test.js:31:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        1.468 s
+Ran all test suites matching /src\/verify_api.test.js/i.
