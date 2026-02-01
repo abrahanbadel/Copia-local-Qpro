@@ -1,0 +1,48 @@
+
+> mi-restaurante@0.1.0 build
+> react-scripts build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Creating an optimized production build...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Compiled with warnings.
+
+[eslint]
+src/App.js
+  Line 29:10:  'pedidosAnteriores' is assigned a value but never used                                                                                                     no-unused-vars
+  Line 29:29:  'setPedidosAnteriores' is assigned a value but never used                                                                                                  no-unused-vars
+  Line 30:10:  'pedidosNuevos' is assigned a value but never used                                                                                                         no-unused-vars
+  Line 64:6:   React Hook useEffect has missing dependencies: 'cargarPedidos', 'esPantallaCocina', and 'vistaActual'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 73:4:   React Hook useEffect has a missing dependency: 'cargarPedidos'. Either include it or remove the dependency array                                           react-hooks/exhaustive-deps
+
+src/Facturacion.js
+  Line 3:138:  'Users' is defined but never used                                                                               no-unused-vars
+  Line 87:6:   React Hook useEffect has a missing dependency: 'cargarDatos'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/GeneradorQR.js
+  Line 31:9:  'descargarTodos' is assigned a value but never used  no-unused-vars
+
+src/Reportes.js
+  Line 47:6:  React Hook useEffect has a missing dependency: 'cargarDatos'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/components/VoiceControlCocina.js
+  Line 128:6:  React Hook useEffect has a missing dependency: 'procesarComando'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  202.1 kB  build/static/js/main.e348e5c3.js
+  46.35 kB  build/static/js/239.06eb8b16.chunk.js
+  1.76 kB   build/static/js/453.99c5ccac.chunk.js
+  263 B     build/static/css/main.e6c13ad2.css
+
+The project was built assuming it is hosted at /RestaurantApp/.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
