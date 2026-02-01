@@ -1,0 +1,24 @@
+
+> mi-restaurante@0.1.0 test
+> react-scripts test --watchAll=false src/Reportes.test.js
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+  console.log
+    🌐 API URL configurada: https://pulingly-unpromising-gracie.ngrok-free.dev/api
+
+      at Object.<anonymous> (src/services/api.js:3:9)
+
+  console.log
+    📊 Datos cargados: { pedidos: 2, pagos: 2 }
+
+      at cargarDatos (src/Reportes.js:57:15)
+
+PASS src/Reportes.test.js
+  ReportesFinancieros Performance
+    ✓ renders and calculates metrics correctly (492 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.875 s
+Ran all test suites matching /src\/Reportes.test.js/i.
