@@ -1,0 +1,18 @@
+
+> mi-restaurante@0.1.0 test
+> react-scripts test --watchAll=false
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+  console.log
+    🌐 API URL configurada: https://pulingly-unpromising-gracie.ngrok-free.dev/api
+
+      at Object.<anonymous> (src/services/api.js:3:9)
+
+PASS src/App.test.js
+  ✓ renders app title (168 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.061 s
+Ran all test suites.
