@@ -1,0 +1,5 @@
+
+> mi-restaurante@0.1.0 test
+> react-scripts test --watchAll=false
+
+sh: 1: react-scripts: not found
