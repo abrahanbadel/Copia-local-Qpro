@@ -20,6 +20,7 @@ namespace RestaurantApi.Controllers
         // GET: api/Pedidos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = null)
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool activos = false)
         {
             var query = _context.Pedidos
                 .Include(p => p.Mesa)
@@ -33,6 +34,12 @@ namespace RestaurantApi.Controllers
                 query = query.Where(p => p.Estado != EstadoPedido.Entregado &&
                                        p.Estado != EstadoPedido.Pagado &&
                                        p.Estado != EstadoPedido.Cancelado);
+            if (activos)
+            {
+                query = query.Where(p =>
+                    p.Estado != EstadoPedido.Entregado &&
+                    p.Estado != EstadoPedido.Pagado &&
+                    p.Estado != EstadoPedido.Cancelado);
             }
 
             var pedidos = await query

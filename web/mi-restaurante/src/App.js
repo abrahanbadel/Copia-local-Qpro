@@ -104,6 +104,12 @@ const cargarPedidos = async () => {
       // El filtrado principal ya lo hace el servidor, pero mantenemos este por seguridad
       // y porque el frontend podría tener lógica ligeramente diferente si cambiamos el backend.
       // Sin embargo, ahora 'data' es mucho más pequeño.
+    // Si estamos en cocina, solo cargar pedidos activos para optimizar rendimiento
+    const esCocina = vistaActual === 'cocina' || esPantallaCocina;
+    const data = await api.getPedidos(esCocina);
+
+    // El filtrado en cliente se mantiene por seguridad, pero ya vienen filtrados del backend si esCocina=true
+    const pedidosTransformados = data
       .filter(p => p.estado !== 'Entregado' && p.estado !== 'Pagado' && p.estado !== 'Cancelado')
       .map(p => ({
         id: p.id,
