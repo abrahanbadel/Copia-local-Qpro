@@ -26,6 +26,25 @@ namespace RestaurantApi.Controllers
                 .Include(p => p.Usuario)  // ✅ AGREGAR ESTA LÍNEA
                 .Include(p => p.Detalles)
                     .ThenInclude(d => d.Platillo)
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = null)
+        {
+            var query = _context.Pedidos
+                .AsNoTracking()
+                .Include(p => p.Mesa)
+                .Include(p => p.Usuario)
+                .Include(p => p.Detalles)
+                    .ThenInclude(d => d.Platillo)
+                .AsQueryable();
+
+            if (activos == true)
+            {
+                query = query.Where(p =>
+                    p.Estado != EstadoPedido.Entregado &&
+                    p.Estado != EstadoPedido.Pagado &&
+                    p.Estado != EstadoPedido.Cancelado);
+            }
+
+            var pedidos = await query
                 .OrderByDescending(p => p.Fecha)
                 .ToListAsync();
 
