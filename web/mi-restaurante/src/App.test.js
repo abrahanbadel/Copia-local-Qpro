@@ -59,4 +59,11 @@ describe('App Component', () => {
     // If it renders Login, it means it worked (default unauthenticated state)
     expect(screen.getByText('Login Component')).toBeInTheDocument();
   });
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
 });
