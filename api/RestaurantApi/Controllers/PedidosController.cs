@@ -22,6 +22,10 @@ namespace RestaurantApi.Controllers
         public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = false)
         {
             var query = _context.Pedidos
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = null)
+        {
+            var query = _context.Pedidos
+                .AsNoTracking()
                 .Include(p => p.Mesa)
                 .Include(p => p.Usuario)
                 .Include(p => p.Detalles)
