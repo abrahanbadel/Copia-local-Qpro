@@ -98,6 +98,9 @@ function AppContent() {
 
 const cargarPedidos = async () => {
   try {
+    // ⚡ Optimización: Solicitar solo pedidos activos al backend para reducir carga de datos
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
     // ⚡ Optimización: Solicitar solo pedidos activos si es necesario
     const soloActivos = true;
     const data = await api.getPedidos(soloActivos);
