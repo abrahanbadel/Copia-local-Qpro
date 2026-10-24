@@ -114,6 +114,9 @@ const cargarPedidos = async () => {
       // Sin embargo, ahora 'data' es mucho más pequeño.
     const data = await api.getPedidos(true);
     const pedidosTransformados = data
+      // Filter is now redundant for 'Pagado' and 'Cancelado' if backend handles it,
+      // but keeping it safe for 'Entregado' if 'activos' includes it.
+      // Assuming 'activos' returns EnProceso, Listo, etc.
     // Si estamos en cocina, solo cargar pedidos activos para optimizar rendimiento
     const esCocina = vistaActual === 'cocina' || esPantallaCocina;
     const data = await api.getPedidos(esCocina);
@@ -154,6 +157,10 @@ const cargarPedidos = async () => {
     const ahora = Date.now();
     setPedidosNuevos(prev => prev.filter(p => ahora - p.timestamp < 5000));
 
+    // Only update state if data has changed to prevent unnecessary re-renders
+    if (JSON.stringify(pedidos) !== JSON.stringify(pedidosTransformados)) {
+      setPedidos(pedidosTransformados);
+    }
     setPedidos(pedidosTransformados);
   } catch (error) {
     console.error('Error al cargar pedidos:', error);
