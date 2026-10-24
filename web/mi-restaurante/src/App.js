@@ -1,4 +1,5 @@
 // src/App.js
+import React, { useState, useEffect, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Plus, Minus, X, ChefHat, Receipt, Menu as MenuIcon, QrCode, LogOut, BarChart3, Utensils, Users } from 'lucide-react';
 import * as api from './services/api';
@@ -96,6 +97,16 @@ function AppContent() {
   };
 
 
+  // ⚡ Bolt Optimization: Use ref to track current state for stable closure in setInterval
+  const pedidosRef = useRef(pedidos);
+
+  useEffect(() => {
+    pedidosRef.current = pedidos;
+  }, [pedidos]);
+
+const cargarPedidos = async () => {
+  try {
+    const data = await api.getPedidos();
 const cargarPedidos = async () => {
   try {
     // ⚡ Optimización: Solo obtener pedidos activos
@@ -143,6 +154,10 @@ const cargarPedidos = async () => {
         estado: p.estado
       }));
 
+      // Use ref to get current state even inside closure
+      const pedidosActuales = pedidosRef.current;
+
+      const idsAnteriores = pedidosActuales.map(p => p.id);
     const idsAnteriores = pedidos.map(p => p.id);
     const nuevos = pedidosTransformados.filter(p => !idsAnteriores.includes(p.id));
 
@@ -161,6 +176,18 @@ const cargarPedidos = async () => {
 
     // 🧹 Limpiar los que pasaron de 5 segundos
     const ahora = Date.now();
+    setPedidosNuevos(prev => {
+      // ⚡ Bolt Optimization: Only update state if items are actually removed
+      const filtered = prev.filter(p => ahora - p.timestamp < 5000);
+      return filtered.length !== prev.length ? filtered : prev;
+    });
+
+      // ⚡ Bolt Optimization: Only update state if data changed to avoid re-renders in Cocina
+      const shouldUpdate = JSON.stringify(pedidosTransformados) !== JSON.stringify(pedidosActuales);
+
+      if (shouldUpdate) {
+        setPedidos(pedidosTransformados);
+      }
     setPedidosNuevos(prev => prev.filter(p => ahora - p.timestamp < 5000));
 
     // Only update state if data has changed to prevent unnecessary re-renders

@@ -159,6 +159,9 @@ export const updateEstadoMesa = async (id, estado) => {
 };
 
 // ==================== PEDIDOS ====================
+export const getPedidos = async () => {
+  try {
+    const response = await fetchWithHeaders(`${API_URL}/pedidos`);
 export const getPedidos = async (activos = false) => {
   try {
     const url = activos ? `${API_URL}/pedidos?activos=true` : `${API_URL}/pedidos`;
