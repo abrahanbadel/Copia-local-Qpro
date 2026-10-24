@@ -19,6 +19,9 @@ namespace RestaurantApi.Controllers
 
         // GET: api/Pedidos
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool activos = false)
+        {
+            var query = _context.Pedidos
         public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos()
         {
             var pedidos = await _context.Pedidos

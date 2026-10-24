@@ -99,6 +99,8 @@ function AppContent() {
 
 const cargarPedidos = async () => {
   try {
+    const data = await api.getPedidos({ activos: true });
+    const pedidosTransformados = data
     const data = await api.getPedidos();
   // ⚡ Bolt Optimization: Use ref to track current state for stable closure in setInterval
   const pedidosRef = useRef(pedidos);

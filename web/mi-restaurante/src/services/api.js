@@ -159,6 +159,10 @@ export const updateEstadoMesa = async (id, estado) => {
 };
 
 // ==================== PEDIDOS ====================
+export const getPedidos = async (params = {}) => {
+  try {
+    const query = new URLSearchParams(params).toString();
+    const url = `${API_URL}/pedidos${query ? `?${query}` : ''}`;
 export const getPedidos = async () => {
   try {
     const response = await fetchWithHeaders(`${API_URL}/pedidos`);
