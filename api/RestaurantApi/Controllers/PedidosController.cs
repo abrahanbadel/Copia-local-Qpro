@@ -19,6 +19,9 @@ namespace RestaurantApi.Controllers
 
         // GET: api/Pedidos
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = false)
+        {
+            var query = _context.Pedidos
         public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = null)
         public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool activos = false)
         {
@@ -32,6 +35,7 @@ namespace RestaurantApi.Controllers
 
             if (activos == true)
             {
+                // Filter out completed/cancelled orders server-side
                 query = query.Where(p => p.Estado != EstadoPedido.Entregado &&
                                        p.Estado != EstadoPedido.Pagado &&
                                        p.Estado != EstadoPedido.Cancelado);
