@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, ChefHat, Clock, CheckCircle, Package } from 'lucide-react';
 import { useAuth } from './context/AuthContext';
 import * as api from './services/api';
@@ -91,6 +92,10 @@ function Cocina({ pedidos = [], onActualizarPedidos }) {
       console.error('Error en control por voz:', error);
     }
   }, [onActualizarPedidos]);
+  const marcarPedidoListoPorVoz = async (pedidoId) => {
+    console.log(`🎤 Control por voz: Marcando pedido ${pedidoId} como listo`);
+    await cambiarEstadoPedido(pedidoId, 'Listo');
+  };
 
   const confirmarCambioEstado = (pedidoId, nuevoEstado, numeroMesa) => {
     setModalConfirmacion({
@@ -133,6 +138,16 @@ function Cocina({ pedidos = [], onActualizarPedidos }) {
       })
       .sort((a, b) => new Date(a.hora) - new Date(b.hora));
   }, [pedidos, filtroMesa, usuario]);
+  const mesasUnicas = [...new Set(pedidos.map(p => p.mesa))].sort((a, b) => a - b);
+
+  const pedidosFiltrados = pedidos
+    .filter(pedido => pedido.estado !== 'Pagado' && pedido.estado !== 'Cancelado')
+    .filter(pedido => {
+      if (!puedeFiltrarMesas()) return true;
+      if (filtroMesa === 'todas') return true;
+      return pedido.mesa.toString() === filtroMesa;
+    })
+    .sort((a, b) => new Date(a.hora) - new Date(b.hora));
 
   const getEstadoColor = (estado) => {
     switch (estado) {
@@ -383,4 +398,5 @@ function Cocina({ pedidos = [], onActualizarPedidos }) {
   );
 }
 
+export default Cocina;
 export default Cocina;

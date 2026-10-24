@@ -1,4 +1,5 @@
 // src/App.js
+import React, { useState, useEffect, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Plus, Minus, X, ChefHat, Receipt, Menu as MenuIcon, QrCode, LogOut, BarChart3, Utensils, Users } from 'lucide-react';
 import * as api from './services/api';
@@ -99,6 +100,48 @@ function AppContent() {
 const cargarPedidos = async () => {
   try {
     const data = await api.getPedidos();
+  // ⚡ Bolt Optimization: Use ref to track current state for stable closure in setInterval
+  const pedidosRef = useRef(pedidos);
+
+  useEffect(() => {
+    pedidosRef.current = pedidos;
+  }, [pedidos]);
+
+const cargarPedidos = async () => {
+  try {
+    const data = await api.getPedidos();
+const cargarPedidos = async () => {
+  try {
+    // ⚡ Optimización: Solo obtener pedidos activos
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+    // ⚡ Optimización: Solicitar solo pedidos activos al backend para reducir carga de datos
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+    // ⚡ Optimización: Solicitar solo pedidos activos si es necesario
+    const soloActivos = true;
+    const data = await api.getPedidos(soloActivos);
+
+    // Si la API ya filtra, el filter del cliente es redundante pero seguro mantenerlo por si acaso
+    // o podemos simplificarlo.
+    const pedidosTransformados = data
+      // .filter(p => p.estado !== 'Entregado' && p.estado !== 'Pagado' && p.estado !== 'Cancelado') // Ya filtrado por backend si se usa api.getPedidos(true)
+    // ⚡ OPTIMIZACIÓN: Filtrado del lado del servidor
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+      // El filtrado principal ya lo hace el servidor, pero mantenemos este por seguridad
+      // y porque el frontend podría tener lógica ligeramente diferente si cambiamos el backend.
+      // Sin embargo, ahora 'data' es mucho más pequeño.
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+      // Filter is now redundant for 'Pagado' and 'Cancelado' if backend handles it,
+      // but keeping it safe for 'Entregado' if 'activos' includes it.
+      // Assuming 'activos' returns EnProceso, Listo, etc.
+    // Si estamos en cocina, solo cargar pedidos activos para optimizar rendimiento
+    const esCocina = vistaActual === 'cocina' || esPantallaCocina;
+    const data = await api.getPedidos(esCocina);
+
+    // El filtrado en cliente se mantiene por seguridad, pero ya vienen filtrados del backend si esCocina=true
     const pedidosTransformados = data
       .filter(p => p.estado !== 'Entregado' && p.estado !== 'Pagado' && p.estado !== 'Cancelado')
       .map(p => ({
@@ -114,6 +157,10 @@ const cargarPedidos = async () => {
         estado: p.estado
       }));
 
+      // Use ref to get current state even inside closure
+      const pedidosActuales = pedidosRef.current;
+
+      const idsAnteriores = pedidosActuales.map(p => p.id);
     const idsAnteriores = pedidos.map(p => p.id);
     const nuevos = pedidosTransformados.filter(p => !idsAnteriores.includes(p.id));
 
@@ -134,6 +181,24 @@ const cargarPedidos = async () => {
     const ahora = Date.now();
     setPedidosNuevos(prev => prev.filter(p => ahora - p.timestamp < 5000));
 
+    setPedidosNuevos(prev => {
+      // ⚡ Bolt Optimization: Only update state if items are actually removed
+      const filtered = prev.filter(p => ahora - p.timestamp < 5000);
+      return filtered.length !== prev.length ? filtered : prev;
+    });
+
+      // ⚡ Bolt Optimization: Only update state if data changed to avoid re-renders in Cocina
+      const shouldUpdate = JSON.stringify(pedidosTransformados) !== JSON.stringify(pedidosActuales);
+
+      if (shouldUpdate) {
+        setPedidos(pedidosTransformados);
+      }
+    setPedidosNuevos(prev => prev.filter(p => ahora - p.timestamp < 5000));
+
+    // Only update state if data has changed to prevent unnecessary re-renders
+    if (JSON.stringify(pedidos) !== JSON.stringify(pedidosTransformados)) {
+      setPedidos(pedidosTransformados);
+    }
     setPedidos(pedidosTransformados);
   } catch (error) {
     console.error('Error al cargar pedidos:', error);
