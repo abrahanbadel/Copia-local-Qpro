@@ -97,6 +97,9 @@ function AppContent() {
   };
 
 
+const cargarPedidos = async () => {
+  try {
+    const data = await api.getPedidos();
   // ⚡ Bolt Optimization: Use ref to track current state for stable closure in setInterval
   const pedidosRef = useRef(pedidos);
 
@@ -176,6 +179,8 @@ const cargarPedidos = async () => {
 
     // 🧹 Limpiar los que pasaron de 5 segundos
     const ahora = Date.now();
+    setPedidosNuevos(prev => prev.filter(p => ahora - p.timestamp < 5000));
+
     setPedidosNuevos(prev => {
       // ⚡ Bolt Optimization: Only update state if items are actually removed
       const filtered = prev.filter(p => ahora - p.timestamp < 5000);
