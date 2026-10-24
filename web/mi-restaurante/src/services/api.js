@@ -159,9 +159,10 @@ export const updateEstadoMesa = async (id, estado) => {
 };
 
 // ==================== PEDIDOS ====================
-export const getPedidos = async () => {
+export const getPedidos = async (activos = false) => {
   try {
-    const response = await fetchWithHeaders(`${API_URL}/pedidos`);
+    const url = `${API_URL}/pedidos${activos ? '?activos=true' : ''}`;
+    const response = await fetchWithHeaders(url);
     if (!response.ok) throw new Error('Error al obtener pedidos');
     return await response.json();
   } catch (error) {

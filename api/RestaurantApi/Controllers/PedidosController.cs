@@ -19,13 +19,24 @@ namespace RestaurantApi.Controllers
 
         // GET: api/Pedidos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos()
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool activos = false)
         {
-            var pedidos = await _context.Pedidos
+            var query = _context.Pedidos
                 .Include(p => p.Mesa)
-                .Include(p => p.Usuario)  // ✅ AGREGAR ESTA LÍNEA
+                .Include(p => p.Usuario)
                 .Include(p => p.Detalles)
                     .ThenInclude(d => d.Platillo)
+                .AsQueryable();
+
+            if (activos)
+            {
+                query = query.Where(p =>
+                    p.Estado != EstadoPedido.Entregado &&
+                    p.Estado != EstadoPedido.Pagado &&
+                    p.Estado != EstadoPedido.Cancelado);
+            }
+
+            var pedidos = await query
                 .OrderByDescending(p => p.Fecha)
                 .ToListAsync();
 
