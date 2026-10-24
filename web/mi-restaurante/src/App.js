@@ -98,6 +98,20 @@ function AppContent() {
 
 const cargarPedidos = async () => {
   try {
+    // ⚡ Optimización: Solicitar solo pedidos activos si es necesario
+    const soloActivos = true;
+    const data = await api.getPedidos(soloActivos);
+
+    // Si la API ya filtra, el filter del cliente es redundante pero seguro mantenerlo por si acaso
+    // o podemos simplificarlo.
+    const pedidosTransformados = data
+      // .filter(p => p.estado !== 'Entregado' && p.estado !== 'Pagado' && p.estado !== 'Cancelado') // Ya filtrado por backend si se usa api.getPedidos(true)
+    // ⚡ OPTIMIZACIÓN: Filtrado del lado del servidor
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+      // El filtrado principal ya lo hace el servidor, pero mantenemos este por seguridad
+      // y porque el frontend podría tener lógica ligeramente diferente si cambiamos el backend.
+      // Sin embargo, ahora 'data' es mucho más pequeño.
     const data = await api.getPedidos(true);
     const pedidosTransformados = data
       // Filter is now redundant for 'Pagado' and 'Cancelado' if backend handles it,
