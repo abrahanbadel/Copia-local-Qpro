@@ -98,6 +98,8 @@ function AppContent() {
 
 const cargarPedidos = async () => {
   try {
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
     // Si estamos en cocina, solo cargar pedidos activos para optimizar rendimiento
     const esCocina = vistaActual === 'cocina' || esPantallaCocina;
     const data = await api.getPedidos(esCocina);

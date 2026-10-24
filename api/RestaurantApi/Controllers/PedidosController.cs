@@ -19,16 +19,17 @@ namespace RestaurantApi.Controllers
 
         // GET: api/Pedidos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool activos = false)
+        public async Task<ActionResult<IEnumerable<PedidoDto>>> GetPedidos([FromQuery] bool? activos = null)
         {
             var query = _context.Pedidos
+                .AsNoTracking()
                 .Include(p => p.Mesa)
                 .Include(p => p.Usuario)
                 .Include(p => p.Detalles)
                     .ThenInclude(d => d.Platillo)
                 .AsQueryable();
 
-            if (activos)
+            if (activos == true)
             {
                 query = query.Where(p =>
                     p.Estado != EstadoPedido.Entregado &&
