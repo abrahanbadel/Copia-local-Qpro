@@ -98,6 +98,12 @@ function AppContent() {
 
 const cargarPedidos = async () => {
   try {
+    // ⚡ OPTIMIZACIÓN: Filtrado del lado del servidor
+    const data = await api.getPedidos(true);
+    const pedidosTransformados = data
+      // El filtrado principal ya lo hace el servidor, pero mantenemos este por seguridad
+      // y porque el frontend podría tener lógica ligeramente diferente si cambiamos el backend.
+      // Sin embargo, ahora 'data' es mucho más pequeño.
     const data = await api.getPedidos(true);
     const pedidosTransformados = data
     // Si estamos en cocina, solo cargar pedidos activos para optimizar rendimiento
